@@ -5,7 +5,8 @@ import {
   TableRow,
   TableHeader,
   TableBody,
-  Table
+  Table,
+  TableCell
 } from '@/components/ui/table';
 import {
   Card,
@@ -16,19 +17,20 @@ import {
   CardTitle
 } from '@/components/ui/card';
 import { Product } from './product';
-import { SelectProduct } from '@/lib/db';
+// import { SelectProduct } from '@/lib/db';
+import { ProductType } from 'app/types/ProductTypes';
 import { useRouter } from 'next/navigation';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useState, useContext, useEffect } from 'react';
+import Context from '@/components/plaid/Context';
 
 export function ProductsTable({
-  products,
   offset,
-  totalProducts
+  user_id
 }: {
-  products: SelectProduct[];
   offset: number;
-  totalProducts: number;
+  user_id: string;
 }) {
   let router = useRouter();
   let productsPerPage = 5;
@@ -37,17 +39,64 @@ export function ProductsTable({
     router.back();
   }
 
+  const [products, setProducts] = useState<ProductType[]>([]);
+  const { linkSuccess, accessToken } = useContext(Context);
+  console.log('access_token', accessToken);
+  console.log('linkSuccess', linkSuccess);
   function nextPage() {
     router.push(`/?offset=${offset}`, { scroll: false });
   }
 
-  return (
+  useEffect(() => {
+    console.log('user_id', user_id);
+    fetch('/api/aws/card_recommendations', {
+      method: 'POST',
+      headers: {},
+      body: JSON.stringify({ user_id: user_id })
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json(); // Parse the response JSON
+      })
+      .then((newProducts: { recommended_list: ProductType[] }) => {
+        console.log('new', newProducts);
+        setProducts(newProducts.recommended_list); // Update state with the parsed products
+      })
+      .catch((error) => {
+        console.error('Failed to fetch products:', error); // Handle errors gracefully
+      });
+  }, [user_id, accessToken]);
+
+  return linkSuccess ? (
     <Card>
-      <CardHeader>
-        <CardTitle>Products</CardTitle>
-        <CardDescription>
-          Manage your products and view their sales performance.
-        </CardDescription>
+      {/* <Button
+          className="h-[50px] w-[100px] bg-black"
+          onClick={() => {
+            fetch('/api/aws/card_recommendations', {
+              method: 'POST',
+              headers: {},
+              body: JSON.stringify({ user_id: user_id || _user_id })
+            })
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json(); // Parse the response JSON
+              })
+              .then((newProducts: ProductType[]) => {
+                setProducts(newProducts); // Update state with the parsed products
+              })
+              .catch((error) => {
+                console.error('Failed to fetch products:', error); // Handle errors gracefully
+              });
+          }}
+        >
+          Regenerate
+        </Button> */}
+      <CardHeader className="flex">
+        <CardDescription>View your Recommended Cards</CardDescription>
       </CardHeader>
       <CardContent>
         <Table>
@@ -57,25 +106,32 @@ export function ProductsTable({
                 <span className="sr-only">Image</span>
               </TableHead>
               <TableHead>Name</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead className="hidden md:table-cell">Price</TableHead>
-              <TableHead className="hidden md:table-cell">
-                Total Sales
-              </TableHead>
-              <TableHead className="hidden md:table-cell">Created at</TableHead>
+
+              <TableHead className="hidden md:table-cell">Annual Fee</TableHead>
+
               <TableHead>
-                <span className="sr-only">Actions</span>
+                <span className="sr-only">Purchase</span>
               </TableHead>
             </TableRow>
           </TableHeader>
-          <TableBody>
-            {products.map((product) => (
-              <Product key={product.id} product={product} />
-            ))}
-          </TableBody>
+          {products && products.length > 0 ? (
+            <TableBody>
+              {products.map((product) => (
+                <Product key={product.name} product={product} />
+              ))}
+            </TableBody>
+          ) : (
+            <TableBody>
+              <TableRow>
+                <TableCell>
+                  <span>Loading</span>
+                </TableCell>
+              </TableRow>
+            </TableBody>
+          )}
         </Table>
       </CardContent>
-      <CardFooter>
+      {/* <CardFooter>
         <form className="flex items-center w-full justify-between">
           <div className="text-xs text-muted-foreground">
             Showing{' '}
@@ -107,7 +163,9 @@ export function ProductsTable({
             </Button>
           </div>
         </form>
-      </CardFooter>
+      </CardFooter> */}
     </Card>
+  ) : (
+    <></>
   );
 }

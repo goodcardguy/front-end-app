@@ -1,5 +1,4 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ProductsTable } from './products-table';
+
 
 // import { UserType } from '@/lib/types'
 import { auth } from '@/lib/auth';
@@ -36,11 +35,9 @@ export default async function ProductsPage(props: {
   const newOffset = null;
   return (
     <QuickstartProvider>
-      <div className="relative">
-        <PlaidWrapper user_id={user_id} />
-
-        <ProductsTable offset={newOffset ?? 0} user_id={user_id} />
-      </div>
+      <PlaidWrapper user_id={user_id} />
+      <div className="w-full h-full bg-black"></div>
+      <Products user_id={user_id} />
     </QuickstartProvider>
   );
 }

@@ -10,10 +10,10 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { MoreHorizontal } from 'lucide-react';
 import { TableCell, TableRow } from '@/components/ui/table';
-import { SelectProduct } from '@/lib/db';
 import { deleteProduct } from './actions';
+import { ProductType } from 'app/types/ProductTypes';
 
-export function Product({ product }: { product: SelectProduct }) {
+export function Product({ product }: { product: ProductType }) {
   return (
     <TableRow>
       <TableCell className="hidden sm:table-cell">
@@ -21,21 +21,22 @@ export function Product({ product }: { product: SelectProduct }) {
           alt="Product image"
           className="aspect-square rounded-md object-cover"
           height="64"
-          src={product.imageUrl}
+          src={
+            product.png?.includes('example')
+              ? '/credit_card_placeholder.png'
+              : product.png || ''
+          }
           width="64"
         />
       </TableCell>
       <TableCell className="font-medium">{product.name}</TableCell>
+      <TableCell className="font-small">{product.description}</TableCell>
       <TableCell>
         <Badge variant="outline" className="capitalize">
-          {product.status}
+          {product.annualFee}
         </Badge>
       </TableCell>
-      <TableCell className="hidden md:table-cell">{`$${product.price}`}</TableCell>
-      <TableCell className="hidden md:table-cell">{product.stock}</TableCell>
-      <TableCell className="hidden md:table-cell">
-        {product.availableAt.toLocaleDateString("en-US")}
-      </TableCell>
+
       <TableCell>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -45,8 +46,13 @@ export function Product({ product }: { product: SelectProduct }) {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>Edit</DropdownMenuItem>
+            <DropdownMenuItem>
+              <button
+                onClick={() => window.open(product.puchaseLink, '_blank')}
+              >
+                Apply
+              </button>
+            </DropdownMenuItem>
             <DropdownMenuItem>
               <form action={deleteProduct}>
                 <button type="submit">Delete</button>

@@ -27,11 +27,11 @@ import {
   TooltipTrigger
 } from '@/components/ui/tooltip';
 import { Analytics } from '@vercel/analytics/react';
-import { User } from './user';
+import { User } from '../(dashboard)/user';
 import { GoodCardGuyLogo } from '@/components/icons';
-import Providers from './providers';
-import { NavItem } from './nav-item';
-import { SearchInput } from './search';
+import Providers from '../(dashboard)/providers';
+import { NavItem } from '../(dashboard)/nav-item';
+import { SearchInput } from '../(dashboard)/search';
 
 export default function DashboardLayout({
   children
