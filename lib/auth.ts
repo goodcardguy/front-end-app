@@ -28,7 +28,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     session: async ({ session, token, user }) => {
       // console.log('user86', user)
-      // console.log('token87', token)
+      console.log('token87', token)
       // //console.log('session88', session)
 
       // const supabase = getSupabase();
@@ -50,7 +50,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       // } else if (user?.id) {
       //   session.user.id = user.id;
       // }
-      const newUser = users[token.userName as string]
+      const newUser = {'id':token.id as string}
 
       session.user = { ...session.user, ...newUser };
       return session;
