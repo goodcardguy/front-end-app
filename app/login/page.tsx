@@ -35,10 +35,19 @@ export default function LoginPage() {
                   password: e.get('password'),
                   redirectTo: '/' // Replace with your desired callback URL
                 });
-              } catch {
-                console.log('error');
-                alert("Looks like those creditials don't work! Please make sure you are using the correct ones.")
-              }
+              } catch (error) {
+                // this is what seems to be returning the error message "CallbackRouteError"
+                console.log(error);
+                // if (error instanceof AuthError) {
+                  // switch (error.type as any) {
+                  //   case "CredentialsSignin":
+                      return { error: "Your email and/or password are incorrect." };
+                    // default:
+                    //   return { error: "Something went wrong!" };
+                  }
+                // }
+                // throw error;
+              // }
             }}
             className="w-full"
           >
