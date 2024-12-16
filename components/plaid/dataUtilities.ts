@@ -1,3 +1,4 @@
+import { ReceiptRussianRuble } from "lucide-react";
 import {
   AccountsGetResponse,
   AssetReport,
@@ -607,7 +608,9 @@ export const transformIdentityData = (data: IdentityData) => {
     const addresses = owner.addresses.map((address) => {
       return `${address.data.street} ${address.data.city}, ${address.data.region} ${address.data.postal_code}`;
     });
-
+    if (!emails || !names || !phones || !addresses){
+      return
+    }
     const num = Math.max(
       emails.length,
       names.length,
