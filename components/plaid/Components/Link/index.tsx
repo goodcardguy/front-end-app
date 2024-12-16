@@ -56,7 +56,7 @@ const Link = () => {
       }
 
       dispatch({ type: "SET_STATE", state: { linkSuccess: true } });
-      redirect("/");
+      // redirect("/");
     },
     [dispatch, isPaymentInitiation, isCraProductsExclusively]
   );
