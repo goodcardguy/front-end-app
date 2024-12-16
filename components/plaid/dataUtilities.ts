@@ -1,4 +1,3 @@
-import { ReceiptRussianRuble } from "lucide-react";
 import {
   AccountsGetResponse,
   AssetReport,

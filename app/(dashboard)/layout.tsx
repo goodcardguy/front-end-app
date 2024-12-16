@@ -1,13 +1,7 @@
 import Link from 'next/link';
 import {
   Home,
-  LineChart,
-  Package,
-  Package2,
   PanelLeft,
-  Settings,
-  ShoppingCart,
-  Users2,
   History
 } from 'lucide-react';
 
@@ -16,16 +10,9 @@ import {
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger
-} from '@/components/ui/tooltip';
 import { Analytics } from '@vercel/analytics/react';
 import { User } from './user';
 import { GoodCardGuyLogo } from '@/components/icons';
@@ -47,6 +34,7 @@ export default function DashboardLayout({
             <MobileNav />
             <DashboardBreadcrumb />
             <SearchInput />
+            
             <User />
           </header>
           <main className="grid flex-1 items-start gap-2 p-4 sm:px-6 sm:py-0 md:gap-4 bg-muted/40">

@@ -50,9 +50,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       // } else if (user?.id) {
       //   session.user.id = user.id;
       // }
-      // user = users[token.id]
+      const newUser = users[token.userName as string]
 
-      session.user = { ...session.user, ...token };
+      session.user = { ...session.user, ...newUser };
       return session;
     },
     jwt({ token, profile }) {
