@@ -12,11 +12,18 @@ type User = {
 
 const users: Record<string, User> = {
   Douglas: {
-    id: '17',
+    id: '18',
     name: 'Douglas',
     email: 'dlguyett@gmail.com',
     userName: 'Douglas',
     password: 'password123'
+  },
+  Ryan: {
+    id: '17',
+    name: 'Ryan',
+    email: 'ryan@gmail.com',
+    userName: 'Ryan',
+    password: 'password456'
   }
 };
 
