@@ -114,7 +114,7 @@ export function ProductsTable({
               </TableHead>
             </TableRow>
           </TableHeader>
-          {products && products.length > 0 ? (
+          {/* {products && products.length > 0 ? (
             <TableBody>
               {products.map((product) => (
                 <Product key={product.name} product={product} />
@@ -128,7 +128,7 @@ export function ProductsTable({
                 </TableCell>
               </TableRow>
             </TableBody>
-          )}
+          )} */}
         </Table>
       </CardContent>
       {/* <CardFooter>

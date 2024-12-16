@@ -26,19 +26,6 @@ const Products = ({ user_id: _user_id }: { user_id?: string }) => {
         user_id={user_id || _user_id}
       />
 
-      {/* {products.includes("assets") && (
-        <Endpoint
-          endpoint="assets"
-          name="Assets"
-          categories={assetsCategories}
-          schema="/asset_report/get/"
-          description="Create and retrieve assets information an asset report"
-          transformData={transformAssetsData}
-          user_id={user_id}
-        />
-      )} */}
-
-      {/* // </ProductTypesContainer> */}
     </div>
   );
 };
